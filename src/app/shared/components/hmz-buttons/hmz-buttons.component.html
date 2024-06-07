@@ -1,0 +1,18 @@
+<div class="p-3 mb-2 bg-white rounded hmz-button">
+  <strong class="title">{{ title | translate }}</strong>
+  <div class="button-list">
+    <ng-container *ngFor="let button of buttons">
+      <button
+      *ngIf="button.isShow??true"
+        mat-raised-button
+        color="{{ button.style }}"
+        [disabled]="button.disabled"
+        (click)="button.click ? button.click() : null"
+      >
+        <mat-icon *ngIf="button.isShowIcon ?? true">{{ button.icon }}</mat-icon>
+        <!-- <i *ngIf="button.isShowIcon ?? true" class="{{ button.icon }}"></i> -->
+        {{ button.title | translate }}
+      </button>
+    </ng-container>
+  </div>
+</div>

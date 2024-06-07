@@ -1,0 +1,24 @@
+<div
+  class="p-3 mb-5 bg-white rounded"
+  style="
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  "
+>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" style="margin-top: -4px">
+        <a routerLink="/" style="color: black">
+          <i class="mr-2" data-feather="home" appFeatherIcon></i>
+        </a>
+      </li>
+      <li class="breadcrumb-item" *ngFor="let item of breadcrumbs$ | async">
+        <a
+          [routerLink]="item.link | lowercase"
+          [routerLinkActive]="['active']"
+          >{{ item.translateKey | translate }}</a
+        >
+      </li>
+    </ol>
+  </nav>
+</div>

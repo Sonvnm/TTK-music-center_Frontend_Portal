@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="card" *ngIf="authService.isRole('Admin')">
+    <div class="card-body">
+      <app-mat-dynamic-form
+        [formFields]="formFields"
+        [data]="subject"
+
+      >
+      </app-mat-dynamic-form>
+    </div>
+  </div>
+
+  <br />
+  <app-hmz-buttons [buttons]="buttonsDoc"></app-hmz-buttons>
+  <input
+    type="file"
+    #fileInput
+    style="display: none"
+    (change)="onFileSelected($event)"
+  />
+  <app-hmz-table
+    [columns]="documentColumns"
+    [data]="dataDoc"
+    [title]="'Tài liệu môn học'"
+    [showSelect]="true"
+    [multiSelect]="true"
+    (onRequest)="onRequestDoc($event)"
+    (onSelect)="onSelectChangeDoc($event)"
+  >
+  </app-hmz-table>
+</div>

@@ -1,0 +1,165 @@
+<div
+  class="d-flex justify-content-between align-items-center flex-wrap grid-margin"
+></div>
+<table
+  *ngIf="this.courseStatistics?.topCourse"
+  mat-table
+  [dataSource]="dataSource"
+  matSort
+  (matSortChange)="announceSortChange($event)"
+  class="mat-elevation-z8"
+>
+  <!-- Position Column -->
+  <ng-container matColumnDef="courseName">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by number"
+    >
+      Tên khóa học
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.courseName }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="totalOrder">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by name"
+    >
+      Số lượng người mua
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.totalOrder }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="totalPrice">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+      mat-sort-header
+      sortActionDescription="Sort by weight"
+    >
+      Tổng doanh thu
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.totalPrice | currency : "VND" }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<mat-paginator
+  class="mat-elevation-z8"
+  [length]="this.courseStatistics.length"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+>
+</mat-paginator>
+<div style="display: flex; justify-content: space-evenly" class="my-2">
+  <apx-chart
+    class="card"
+    *ngIf="this.courseStatistics"
+    [series]="courseStatisticsChart.series"
+    [chart]="courseStatisticsChart.chart"
+    [labels]="courseStatisticsChart.labels"
+    [responsive]="courseStatisticsChart.responsive"
+    [title]="courseStatisticsChart.title"
+  ></apx-chart>
+  <apx-chart
+    class="card"
+    *ngIf="this.courseStatistics && this.courseStatistics.orderStatistic"
+    [series]="ordersChartOptions.series"
+    [chart]="ordersChartOptions.chart"
+    [labels]="ordersChartOptions.labels"
+    [responsive]="ordersChartOptions.responsive"
+    [title]="ordersChartOptions.title"
+  ></apx-chart>
+</div>
+<apx-chart
+  class="card my-4"
+  *ngIf="this.users"
+  [series]="revenueChartOptions.series"
+  [chart]="revenueChartOptions.chart"
+  [dataLabels]="revenueChartOptions.dataLabels"
+  [plotOptions]="revenueChartOptions.plotOptions"
+  [yaxis]="revenueChartOptions.yaxis"
+  [legend]="revenueChartOptions.legend"
+  [fill]="revenueChartOptions.fill"
+  [stroke]="revenueChartOptions.stroke"
+  [tooltip]="revenueChartOptions.tooltip"
+  [xaxis]="revenueChartOptions.xaxis"
+  [title]="revenueChartOptions.title"
+  [subtitle]="revenueChartOptions.subtitle"
+></apx-chart>
+
+<div style="display: flex; justify-content: space-around" class="mt-4">
+  <div class="w-100 card">
+    <div class="d-flex align-items-end p-2">
+      <mat-icon
+        style="
+          color: rgb(150, 150, 240);
+          height: 2rem;
+          width: 2rem;
+          font-size: 2rem;
+        "
+      >
+        person
+      </mat-icon>
+      <h4>Tổng người dùng:</h4>
+      <br />
+      <h4 class="ms-2">{{ users?.total | number }}</h4>
+    </div>
+    <div>
+      <apx-chart
+        style="display: block; width: 100%"
+        [series]="customersChartOptions.series"
+        [chart]="customersChartOptions.chart"
+        [colors]="customersChartOptions.colors"
+        [xaxis]="customersChartOptions.xaxis"
+        [stroke]="customersChartOptions.stroke"
+        [markers]="customersChartOptions.markers"
+        [title]="customersChartOptions.title"
+        [grid]="customersChartOptions.grid"
+        [dataLabels]="customersChartOptions.dataLabels"
+      ></apx-chart>
+    </div>
+  </div>
+
+  <div *ngIf="this.users?.values" class="w-100 card">
+    <div class="d-flex align-items-end p-2">
+      <mat-icon
+        style="
+          color: rgb(150, 150, 240);
+          height: 2rem;
+          width: 2rem;
+          font-size: 2rem;
+        "
+      >
+        money
+      </mat-icon>
+      <h4>Tổng doanh thu:</h4>
+      <br />
+      <h4 class="ms-2">{{ users?.totalSell | currency : "VND" }}</h4>
+    </div>
+    <div>
+      <apx-chart
+        style="display: block; width: 100%"
+        [series]="sellsChartOptions.series"
+        [chart]="sellsChartOptions.chart"
+        [colors]="sellsChartOptions.colors"
+        [xaxis]="sellsChartOptions.xaxis"
+        [yaxis]="sellsChartOptions.yaxis"
+        [stroke]="sellsChartOptions.stroke"
+        [markers]="sellsChartOptions.markers"
+        [title]="sellsChartOptions.title"
+        [grid]="sellsChartOptions.grid"
+        [dataLabels]="sellsChartOptions.dataLabels"
+      ></apx-chart>
+    </div>
+  </div>
+</div>

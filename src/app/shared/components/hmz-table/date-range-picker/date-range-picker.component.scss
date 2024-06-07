@@ -1,0 +1,51 @@
+.filter-container {
+  display: flex;
+  align-items: center;
+  /* Căn giữa các phần tử theo chiều dọc */
+}
+
+.mat-form-field {
+  flex-grow: 1;
+  /* Các ô nhập liệu sẽ mở rộng để lấp đầy không gian trong .filter-container */
+  margin-right: 8px;
+  /* Khoảng cách giữa các ô nhập liệu */
+  display: flex;
+  align-items: center;
+  /* Căn giữa các phần tử theo chiều dọc trong .mat-form-field */
+}
+
+::ng-deep .mat-form-field-prefix, ::ng-deep .mat-form-field-suffix {
+  display: flex;
+  align-items: center;
+}
+.mat-datepicker-toggle,
+button[mat-button] {
+  display: block;
+  /* Hiển thị biểu tượng date và biểu tượng xóa */
+}
+
+.mat-form-field:hover button[mat-button] {
+  display: block;
+  /* Hiển thị nút xóa khi hover vào .mat-form-field */
+}
+
+/* Định dạng phần tử label và biểu tượng arrow_forward */
+label {
+  display: flex;
+  align-items: center;
+  /* Căn giữa các phần tử theo chiều dọc */
+}
+
+label mat-icon {
+  margin-right: 8px;
+  /* Khoảng cách giữa biểu tượng và văn bản */
+}
+
+/* Loại bỏ khung viền khi chọn biểu tượng picker date */
+.mat-datepicker-content {
+  border: none !important;
+  display: flex;
+  /* Ẩn biểu tượng date */
+  justify-items: center;
+  align-items: center;
+}

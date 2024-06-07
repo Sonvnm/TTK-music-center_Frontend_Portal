@@ -1,0 +1,116 @@
+<div class="container-fluid pb-0">
+  <div class="row">
+    <div class="col-md-12">
+      <app-hmz-buttons [title]="title" [buttons]="buttons"></app-hmz-buttons>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <!-- date from-->
+          <mat-label>Từ ngày</mat-label>
+          <mat-form-field class="w-100">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Từ ngày"
+              [(ngModel)]="calculateDate.fromValue"
+              disabled
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <!-- date to-->
+          <mat-label>Đến ngày</mat-label>
+          <mat-form-field class="w-100">
+            <input
+              matInput
+              [matDatepicker]="picker1"
+              placeholder="Đến ngày"
+              [(ngModel)]="calculateDate.toValue"
+              disabled
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <app-hmz-table
+        [columns]="columns"
+        [data]="data"
+        [title]="'Danh sách quá trình dạy học'"
+        (onRequest)="loadData()"
+        [showSelect]="false"
+        [multiSelect]="false"
+
+      >
+      </app-hmz-table>
+      <div class="form-control" style="display: grid">
+        <label for="">Tiền lương: 150.000 VND/h</label>
+        <label for="">Người làm: {{ item.username }}</label>
+        <label for="">Số tiết dạy: {{ item.totalDay }} tiết học</label>
+        <label for="">Số giờ làm: {{ item.totalTime }} (giờ)</label>
+        <strong for="">Tổng tiền: {{ item.amount | number }} VND</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #content style="display: none">
+  <div class="d-flex p-4" style="justify-content: center">
+    <img
+      src="assets/images/ttk-music-center-logo.png"
+      style="width: 10rem; height: 10rem"
+    />
+    <div
+      class="ms-4"
+      style="display: flex; flex-direction: column; justify-content: center"
+    >
+      <h1>TTK Music Center</h1>
+      <h2>
+        Phiếu thanh toán lương tháng {{ this.month }} của giảng viên
+        {{ this.user.firstName + " " + this.user.lastName }}
+      </h2>
+      <h3>
+        Từ ngày:{{ calculateDate.fromValue | date : "dd/MM/yyyy" }} đến ngày:
+        {{ calculateDate.toValue | date : "dd/MM/yyyy" }}
+      </h3>
+    </div>
+  </div>
+  <table class="table" style="font-size: 1.5rem">
+    <thead>
+      <tr>
+        <th scope="col">Số thứ tự</th>
+        <th scope="col">Khóa học</th>
+        <th scope="col">Lớp</th>
+        <th scope="col">Thời gian bắt đầu</th>
+        <th scope="col">Thời gian kết thúc</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of this.learningProcessList; let index = index">
+        <th scope="row">{{ index + 1 }}</th>
+        <td scope="row">{{ i.courseName }}</td>
+        <td scope="row">{{ i.className }}</td>
+        <td scope="row">{{ toDateTime(i.startTime) }}</td>
+        <td scope="row">{{ toDateTime(i.endTime) }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="display: grid; font-size: 1.5rem">
+    <label for="">Tiền lương: 150.000 VND/ giờ</label>
+    <label for="">Giảng viên: {{ item.username }}</label>
+    <label for="">Số tiết dạy: {{ item.totalDay }} tiết học</label>
+    <label for="">Số giờ làm: {{ item.totalTime }} (giờ)</label>
+    <strong for="">Tổng tiền: {{ item.amount | number }} VND</strong>
+  </div>
+</div>

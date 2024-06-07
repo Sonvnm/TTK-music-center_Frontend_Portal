@@ -1,0 +1,17 @@
+<app-hmz-buttons [buttons]="buttons"></app-hmz-buttons>
+<app-hmz-table
+  [columns]="columns"
+  [data]="data"
+  [title]="'Danh sách quá trình dạy học'"
+  [showSelect]="true"
+  [multiSelect]="true"
+  (onRequest)="onRequest($event)"
+  (onSelect)="onSelectChange($event)"
+>
+</app-hmz-table>
+<app-schedule-day-in-week
+  *ngIf="this.datas?.length > 0"
+  [years]="years"
+  [datas]="datas"
+>
+</app-schedule-day-in-week>

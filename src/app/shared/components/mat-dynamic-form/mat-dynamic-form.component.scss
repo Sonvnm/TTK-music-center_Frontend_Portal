@@ -1,0 +1,19 @@
+mat-form-field {
+  width: 100%;
+}
+form {
+  width: 100%;
+  display: contents;
+  justify-content: flex-end;
+}
+
+.white-space {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+::ng-deep .dropzone .dz-preview .dz-image {
+  width: 250px !important;
+  height: 250px !important;
+}

@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <app-hmz-buttons
+    [title]="'Vào nhóm chat'"
+    [buttons]="buttonChat"
+  ></app-hmz-buttons>
+  <div class="card" *ngIf="authService.isRole('Admin')">
+    <div class="card-body">
+      <app-mat-dynamic-form
+        [formFields]="formFields"
+        [data]="class"
+        (submit)="onFormSubmit($event)"
+        (change)="onFormChange($event)"
+      >
+      </app-mat-dynamic-form>
+    </div>
+  </div>
+  <br />
+  <app-hmz-buttons [title]="title" [buttons]="buttons"></app-hmz-buttons>
+  <app-hmz-table
+    [columns]="columns"
+    [data]="data"
+    [title]="'Danh sách học viên'"
+    [showSelect]="true"
+    [multiSelect]="true"
+    (onRequest)="onRequest($event)"
+    (onSelect)="onSelectChange($event)"
+  >
+  </app-hmz-table>
+  <br />
+  <app-hmz-buttons [buttons]="buttonsDoc"></app-hmz-buttons>
+  <input
+    type="file"
+    #fileInput
+    style="display: none"
+    (change)="onFileSelected($event)"
+  />
+  <app-hmz-table
+    [columns]="documentColumns"
+    [data]="dataDoc"
+    [title]="'Tài liệu'"
+    [showSelect]="true"
+    [multiSelect]="true"
+    (onRequest)="onRequestDoc($event)"
+    (onSelect)="onSelectChangeDoc($event)"
+  >
+  </app-hmz-table>
+</div>

@@ -1,0 +1,63 @@
+<app-hmz-buttons [buttons]="buttonChat"></app-hmz-buttons>
+
+<div class="container">
+  <div class="chat-wrapper" style="max-height: 50vh">
+    <div class="header">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/4185/4185714.png"
+        alt="Avatar"
+        class="avatar"
+      />
+      <h2>{{ title }}</h2>
+    </div>
+    <div class="chat-box">
+      <ng-container *ngFor="let item of messages">
+        <div
+          ngClass="{{
+            item.user?.username === user?.username
+              ? 'message sent'
+              : 'message received'
+          }}"
+        >
+          <div class="message-info">
+            <img
+              *ngIf="item.user?.image"
+              [src]="item.user?.image"
+              alt="Avatar"
+              class="avatar"
+            />
+            <span class="message-sender">{{ item?.user?.username }}</span>
+            <span class="message-time">{{ timeAgo(item?.sendAt) }}</span>
+          </div>
+          <p>{{ item?.content }}</p>
+        </div>
+      </ng-container>
+      <!-- More messages here -->
+    </div>
+    <div class="footer">
+      <input
+        type="text"
+        placeholder="Type your message..."
+        class="message-input mr-2"
+        [(ngModel)]="message"
+
+      />
+      <button (click)="sendMessage(user)"  style="display: flex;">
+        <mat-icon class="mr-2">send</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="user-list">
+    <ul>
+      <li *ngFor="let item of users">
+        <img [src]="item.image" alt="Avatar" class="user-avatar" />
+        <div style="display: grid">
+          <span>{{ item.username }}</span>
+          <small>{{ item.roleName }}</small>
+        </div>
+      </li>
+
+      <!-- More users here -->
+    </ul>
+  </div>
+</div>

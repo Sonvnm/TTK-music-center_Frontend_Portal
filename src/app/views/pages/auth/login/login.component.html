@@ -1,0 +1,93 @@
+<div class="row w-100 mx-0 auth-page">
+  <div class="col-md-8 col-xl-6 mx-auto">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-4 pe-md-0">
+          <div
+            class="auth-side-wrapper"
+            [ngStyle]="{
+              'background-image':
+                'url(https://png.pngtree.com/png-vector/20220714/ourmid/pngtree-sound-wave-vector-icon-digital-abstract-audio-vector-png-image_37929052.png)'
+            }"
+          ></div>
+        </div>
+        <div class="col-md-8 ps-md-0">
+          <div class="auth-form-wrapper px-4 py-5">
+            <a routerLink="." class="nobleui-logo d-block mb-2"
+              >{{ "Site.FirstName" | translate
+              }}<span>{{ "Site.LastName" | translate }}</span></a
+            >
+            <h5 class="text-muted fw-normal mb-4">
+              {{ "Site.Intro" | translate }}
+            </h5>
+            <form
+              class="forms-sample"
+              *ngIf="(authService.currentUser$ | async) === null"
+              [formGroup]="form"
+              (ngSubmit)="login()"
+              autocomplete="off"
+            >
+              <div class="mb-3">
+                <label class="form-label fw-bold">{{
+                  "Login.Form.Email" | translate
+                }}</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email"
+                  formControlName="email"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-bold">{{
+                  "Login.Form.Password" | translate
+                }}</label>
+                <div
+                  class="d-flex justify-content-between align-items-center position-relative"
+                >
+                  <input
+                    [type]="!showPassword ? 'password' : 'text'"
+                    class="form-control"
+                    placeholder="Password"
+                    formControlName="password"
+                  />
+                  <mat-icon
+                    (click)="this.showPassword = !this.showPassword"
+                    class="position-absolute me-2 end-0"
+                    style="cursor: pointer"
+                    >{{
+                      this.showPassword ? "visibility" : "visibility_off"
+                    }}</mat-icon
+                  >
+                </div>
+              </div>
+              <div class="form-check mb-3">
+                <input
+                  formControlName="rememberMe"
+                  type="checkbox"
+                  class="form-check-input"
+                  id="authCheck"
+                />
+                <label class="form-check-label" for="authCheck">
+                  {{ "Login.Form.RememberMe" | translate }}
+                </label>
+              </div>
+              <div>
+                <button
+                  [disabled]="form.invalid"
+                  type="submit"
+                  class="btn btn-primary me-2 mb-2 mb-md-0"
+                >
+                  {{ "Login.Form.Submit" | translate }}
+                </button>
+              </div>
+              <!-- <a routerLink="/auth/register" class="d-block mt-3 text-muted">{{
+                "Login.Form.register" | translate
+              }}</a> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

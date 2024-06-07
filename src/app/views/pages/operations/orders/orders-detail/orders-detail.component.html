@@ -1,0 +1,11 @@
+<app-hmz-buttons [title]="''" [buttons]="buttons"></app-hmz-buttons>
+
+<app-hmz-table
+  [columns]="columns"
+  [data]="data"
+  [title]="'Chi tiết đơn hàng' + ' ' +this.code"
+  (onRequest)="onRequest($event)"
+  [showSelect]="true"
+  [multiSelect]="true"
+>
+</app-hmz-table>

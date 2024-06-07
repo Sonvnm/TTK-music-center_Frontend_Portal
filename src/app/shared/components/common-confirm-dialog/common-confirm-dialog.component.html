@@ -1,0 +1,23 @@
+<div class="container-fluid pb-0">
+  <div class="row">
+    <app-hmz-buttons [title]="title" [buttons]="buttons"></app-hmz-buttons>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <strong>{{ "Common.List" | translate }}</strong>
+      <!-- slice 10  item firts -->
+      <div class="card" *ngFor="let item of pageConfig.items">
+        <div class="card-body">
+          {{ item }}
+        </div>
+      </div>
+      <!-- total -->
+    </div>
+  </div>
+</div>
+<mat-paginator
+  [length]="pageConfig.totalItems"
+  [pageSize]="5"
+  (page)="onChangePage($event)"
+>
+</mat-paginator>

@@ -1,0 +1,388 @@
+<!-- #region  View-->
+<mat-card>
+  <ng-content> </ng-content>
+  <form
+    class="form"
+    [formGroup]="dataForm"
+    (change)="onChange()"
+    (ngSubmit)="onSubmit()"
+    (input)="onChange()"
+  >
+    <div class="row">
+      <ng-container *ngFor="let field of formFields">
+        <div class="col-md-12">
+          <ng-container
+            *ngIf="
+              field.type === 'text' ||
+              field.type === 'email' ||
+              field.type === 'password' ||
+              field.type === 'number'
+            "
+          >
+            <ng-container
+              *ngTemplateOutlet="text; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <!-- other -->
+          <ng-container *ngIf="field.type === 'textarea'">
+            <ng-container
+              *ngTemplateOutlet="textarea; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'date'">
+            <ng-container
+              *ngTemplateOutlet="date; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="field.type === 'dateTimePicker'">
+            <ng-container
+              *ngTemplateOutlet="dateTimePicker; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'checkbox'">
+            <ng-container
+              *ngTemplateOutlet="checkbox; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'select'">
+            <ng-container
+              *ngTemplateOutlet="select; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'radio'">
+            <ng-container
+              *ngTemplateOutlet="radio; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'file'">
+            <ng-container
+              *ngTemplateOutlet="file; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'dropZone'">
+            <ng-container
+              *ngTemplateOutlet="dropZone; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'image'">
+            <ng-container
+              *ngTemplateOutlet="image; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'editorQuill'">
+            <ng-container
+              *ngTemplateOutlet="editorQuill; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'radioGroup'">
+            <ng-container
+              *ngTemplateOutlet="radioGroup; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+          <ng-container *ngIf="field.type === 'price'">
+            <ng-container
+              *ngTemplateOutlet="price; context: { field: field }"
+            ></ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+</mat-card>
+
+<!-- #endregion View -->
+
+<!-- #region  Template -->
+
+<ng-template #text let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-form-field [className]="field?.className">
+      <mat-label>{{ field.label }}</mat-label>
+      <input
+        matInput
+        [type]="field.type"
+        [formControlName]="field.name"
+        [placeholder]="'Nhập ' + field.label"
+        [readonly]="field.readonly"
+      />
+      <mat-error *ngFor="let validator of field.validators">
+        <ng-container *ngIf="validator">
+          <ng-container
+            *ngTemplateOutlet="
+              error;
+              context: { validator: validator, field: field }
+            "
+          ></ng-container>
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+</ng-template>
+
+<ng-template #price let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-form-field [className]="field?.className">
+      <mat-label>{{ field.label }}</mat-label>
+      <input
+        matInput
+        [type]="field.type"
+        [formControlName]="field.name"
+        [placeholder]="'Nhập ' + field.label"
+        [readonly]="field.readonly"
+        appCurrencyMask
+      />
+      <mat-error *ngFor="let validator of field.validators">
+        <ng-container *ngIf="validator">
+          <ng-container
+            *ngTemplateOutlet="
+              error;
+              context: { validator: validator, field: field }
+            "
+          ></ng-container>
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+</ng-template>
+
+<ng-template #textarea let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-form-field [className]="field?.className">
+      <mat-label>{{ field.label }}</mat-label>
+      <textarea
+        matInput
+        [formControlName]="field.name"
+        [placeholder]="'Nhập ' + field.label"
+        [readonly]="field.readonly"
+      ></textarea>
+      <mat-error *ngFor="let validator of field.validators">
+        <ng-container
+          *ngTemplateOutlet="
+            error;
+            context: { validator: validator, field: field }
+          "
+        ></ng-container>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+</ng-template>
+
+<ng-template #dateTimePicker let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-form-field [className]="field?.className">
+      <mat-label>{{ field.label }}</mat-label>
+      <input
+        matInput
+        [ngxMatDatetimePicker]="picker"
+        [formControlName]="field.name"
+        placeholder="Choose a date"
+        [readonly]="field.readonly"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="$any(picker)"
+      ></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker [touchUi]="true">
+      </ngx-mat-datetime-picker>
+
+      <mat-error *ngFor="let validator of field.validators">
+        <ng-container
+          *ngTemplateOutlet="
+            error;
+            context: { validator: validator, field: field }
+          "
+        ></ng-container>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+</ng-template>
+
+<ng-template #date let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-form-field [className]="field?.className">
+      <mat-label>{{ field.label }}</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [formControlName]="field.name"
+        [placeholder]="'Nhập ' + field.label"
+        [readonly]="field.readonly"
+        (dateChange)="field?.event ? field.event($event) : null"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngFor="let validator of field.validators">
+        <ng-container
+          *ngTemplateOutlet="
+            error;
+            context: { validator: validator, field: field }
+          "
+        ></ng-container>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+</ng-template>
+
+<ng-template #checkbox let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-checkbox
+      [formControlName]="field.name"
+      [value]="dataForm.get(field.name)?.value"
+      >{{ field.label }}</mat-checkbox
+    >
+  </ng-container>
+</ng-template>
+
+<ng-template #select let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-form-field [className]="field?.className">
+      <mat-label>{{ field.label }}</mat-label>
+      <mat-select
+        [formControlName]="field.name"
+        [multiple]="field.multiple"
+        [title]="field.label"
+        (selectionChange)="onChange()"
+      >
+        <mat-option
+          *ngFor="let option of field?.options"
+          [value]="option.value"
+          [title]="option.label"
+          [disabled]="option?.disabled"
+          >{{ option.label }}</mat-option
+        >
+      </mat-select>
+      <mat-error *ngFor="let validator of field.validators">
+        <ng-container
+          *ngTemplateOutlet="
+            error;
+            context: { validator: validator, field: field }
+          "
+        ></ng-container>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+</ng-template>
+
+<ng-template #radio let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-radio-group [formControlName]="field.name">
+      <mat-radio-button
+        *ngFor="let option of field?.value"
+        [value]="option.value"
+        [title]="option.label"
+        [disabled]="option?.disabled"
+        >{{ option.label }}{{ option.value }}</mat-radio-button
+      >
+    </mat-radio-group>
+  </ng-container>
+</ng-template>
+
+<ng-template #file let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-form-field [className]="field?.className">
+      <mat-label>{{ field.label }}</mat-label>
+      <input
+        matInput
+        [type]="field.type"
+        [formControlName]="field.name"
+        [placeholder]="'Nhập ' + field.label"
+        [readonly]="field.readonly"
+      />
+      <mat-error *ngFor="let validator of field.validators">
+        <ng-container
+          *ngTemplateOutlet="
+            error;
+            context: { validator: validator, field: field }
+          "
+        ></ng-container>
+      </mat-error>
+    </mat-form-field>
+  </ng-container>
+</ng-template>
+
+<ng-template #error let-validator="validator" let-field="field">
+  <span
+    class="white-space"
+    [title]="field.errorMessages[validator.name]"
+    *ngIf="
+      (dataForm.get(field.name)?.touched || dataForm.get(field.name)?.dirty) &&
+      dataForm.get(field.name)?.hasError(validator.name)
+    "
+  >
+    {{ field.errorMessages[validator.name] }}
+  </span>
+</ng-template>
+
+<!-- dropzone image -->
+<ng-template #dropZone let-field="field">
+  <ng-container [formGroup]="dataForm" style="height: 1rem">
+    <mat-label>{{ field.label }}</mat-label>
+    <dropzone
+      [message]="
+        field?.dropZoneConfig?.message ?? 'Bấm hoặc kéo thả file vào đây'
+      "
+      [config]="field?.dropZoneConfig?.config ?? undefined"
+      (error)="field?.dropZoneConfig?.errorMessages($event)"
+      (success)="field?.dropZoneConfig?.onUploadSuccess($event)"
+      (removed)="field?.dropZoneConfig?.onRemove($event)"
+    ></dropzone>
+  </ng-container>
+</ng-template>
+
+<!-- // show image only -->
+<ng-template #image let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <div style="position: relative; display: inline-block; margin: 12px">
+      <img
+        *ngIf="dataForm.get(field.name)?.value"
+        [src]="dataForm.get(field.name)?.value"
+        alt="image"
+        style="max-width: 200px; max-height: 200px; object-fit: cover"
+      />
+      <button
+        (click)="dataForm.get(field.name)?.setValue(null)"
+        *ngIf="dataForm.get(field.name)?.value"
+        style="
+          position: absolute;
+          top: -12px;
+          right: -12px;
+          background-color: white;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        "
+        mat-icon-button
+        mat-elevation-z8
+        aria-label="Close button"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </ng-container>
+</ng-template>
+<!-- Quill Editor -->
+<ng-template #editorQuill let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-label>{{ field.label }}</mat-label>
+    <quill-editor
+      [readOnly]="field.readonly"
+      [formControlName]="field.name"
+    ></quill-editor>
+  </ng-container>
+</ng-template>
+
+<!-- RadioGroup -->
+<ng-template #radioGroup let-field="field">
+  <ng-container [formGroup]="dataForm">
+    <mat-radio-group [formControlName]="field.name">
+      <mat-radio-button
+        *ngFor="let option of field?.radioGroups"
+        [value]="option.value"
+        [title]="option.label"
+        [disabled]="option?.disabled"
+        >{{ option.label }}</mat-radio-button
+      >
+    </mat-radio-group>
+  </ng-container>
+
+  <!-- #region Template -->
+</ng-template>

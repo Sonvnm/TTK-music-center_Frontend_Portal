@@ -1,0 +1,14 @@
+table {
+  width: 100%;
+
+  th {
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}

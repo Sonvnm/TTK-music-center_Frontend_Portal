@@ -1,0 +1,27 @@
+<div class="image-box">
+  <mat-icon
+    *ngIf="this.imageFile"
+    class="close-button"
+    (click)="handleRemoveImage(fileInput)"
+  >
+    close
+  </mat-icon>
+  <div
+    *ngIf="!this.imageFile"
+    imageDropDrag
+    class="drop-box"
+    (handleImageFile)="handleFile($event)"
+    (click)="fileInput.click()"
+  >
+    <div class="d-flex align-items-center">
+      <mat-icon>image </mat-icon>Drop file here !
+    </div>
+  </div>
+  <img *ngIf="imageFile != null" [src]="imageFile.url" />
+</div>
+<input
+  type="file"
+  style="opacity: 0"
+  #fileInput
+  (change)="importFile($event)"
+/>

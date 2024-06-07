@@ -1,0 +1,83 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-color: #ffff;
+  align-items: center;
+}
+
+.custom-form-field .mat-form-field-flex {
+  background-color: #ffff;
+}
+
+::ng-deep .custom-form-field .mat-form-field-flex {
+  background-color: #ffff;
+}
+
+.check-box {
+  width: 40px;
+  /* Đặt chiều rộng của cột là 40px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Căn giữa theo cả chiều dọc và ngang */
+}
+
+.btn-search {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+
+.link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.white-space {
+  width: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.image {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5; /* Optional: to give a visual indication of being disabled */
+}
+
+// Custom style for table
+.badge {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  background-color: #007bff;
+}
+.badge-primary {
+  background-color: #007bff;
+}
+.badge-secondary {
+  background-color: #6c757d;
+}
+.badge-success {
+  background-color: #28a745;
+}
+.badge-danger {
+  background-color: #dc3545;
+}

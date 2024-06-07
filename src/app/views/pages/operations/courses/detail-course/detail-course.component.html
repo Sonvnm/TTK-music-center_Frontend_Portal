@@ -1,0 +1,49 @@
+<div class="container-fluid pb-0 detail-course">
+  <mat-card>
+    <mat-tab-group>
+      <mat-tab label="Thông tin cơ bản">
+        <ng-template matTabContent>
+          <div class="row">
+            <div class="mt-4">
+              <app-hmz-buttons
+                [title]="title"
+                [buttons]="buttons"
+              ></app-hmz-buttons>
+            </div>
+            <div class="col-md-12">
+              <app-mat-dynamic-form
+                [formFields]="formFields"
+                [data]="course"
+                (submit)="onFormSubmit($event)"
+                (change)="onFormChange($event)"
+              >
+              </app-mat-dynamic-form>
+            </div>
+          </div>
+          <div class="mt-4">
+            <app-hmz-buttons
+              [title]="'Thêm môn học vào khóa'"
+              [buttons]="buttonsSubject"
+            ></app-hmz-buttons>
+          </div>
+          <app-hmz-table
+            *ngIf="this.isUpdate"
+            [columns]="subjectColumns"
+            [data]="subjectData"
+            [title]="'Môn học'"
+            [showSelect]="true"
+            [multiSelect]="true"
+            (onRequest)="onRequest($event)"
+            (onSelect)="onSelectChange($event)"
+          >
+          </app-hmz-table>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="this.courseId" label="Lịch học">
+        <ng-template matTabContent>
+          <app-schedule [course]="course"></app-schedule>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

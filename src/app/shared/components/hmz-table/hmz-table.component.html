@@ -1,0 +1,326 @@
+  <div class="card hmz-shadow rounded">
+    <div class="card-header">
+      <h4 for="tableTitle">{{ title | translate }}</h4>
+      <button class="btn-search" mat-fab color="primary" (click)="request()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover table-responsive">
+        <thead>
+          <tr>
+            <!-- checkBox -->
+            <th
+              class="check-box d-flex"
+              *ngIf="showSelect && !multiSelect"
+              style="height: 8rem; width: 100%"
+            ></th>
+            <th class="check-box d-flex" *ngIf="multiSelect" style="height: 8rem">
+              <mat-checkbox
+                [(ngModel)]="checkAll"
+                (change)="toggleSelectAll()"
+              ></mat-checkbox>
+            </th>
+            <ng-container *ngFor="let column of columns">
+              <th
+                *ngIf="!column.hidden"
+                [ngClass]="{
+                  disabled: column.disabled || column.disabledHeader,
+                  'not-clickable': true
+                }"
+              >
+                <p (click)="sort(column)" style="cursor: pointer;display:flex;align-items: center;justify-content: space-between;">
+                  {{ column.fieldName | translate }}
+                  <mat-icon *ngIf="column.sort">{{
+                    column.sortType === "asc"
+                      ? "arrow_drop_down"
+                      : "arrow_drop_up"
+                  }}</mat-icon>
+                </p>
+                <!-- switch case ng template -->
+                <ng-container [ngSwitch]="column.type">
+                  <ng-container *ngSwitchCase="'text'">
+                    <ng-container
+                      *ngTemplateOutlet="text; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'number'">
+                    <ng-container
+                      *ngTemplateOutlet="number; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'date'">
+                    <ng-container
+                      *ngTemplateOutlet="date; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'datetime'">
+                    <ng-container
+                      *ngTemplateOutlet="datetime; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'email'">
+                    <ng-container
+                      *ngTemplateOutlet="email; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'link'">
+                    <ng-container
+                      *ngTemplateOutlet="text; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'image'">
+                    <ng-container
+                      *ngTemplateOutlet="image; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'boolean'">
+                    <ng-container
+                      *ngTemplateOutlet="boolean; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'select'">
+                    <ng-container
+                      *ngTemplateOutlet="select; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+
+                  <ng-container *ngSwitchDefault>
+                    <ng-container
+                      *ngTemplateOutlet="text; context: { column: column }"
+                    ></ng-container>
+                  </ng-container>
+                </ng-container>
+              </th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of source.items">
+            <!-- Individual row checkboxes -->
+            <td
+              *ngIf="showSelect"
+              style="
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              <mat-checkbox
+                [checked]="isChecked(item)"
+                (change)="toggleRowSelection(item)"
+              ></mat-checkbox>
+            </td>
+            <td
+              *ngFor="let column of columns"
+              [ngClass]="{ disabled: column.disabled, 'not-clickable': true }"
+              style="
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+              [title]="item[column.field]"
+            >
+              <ng-container *ngIf="!column.hidden">
+                <ng-container [ngSwitch]="column.type">
+                  <!-- Text -->
+                  <ng-container *ngSwitchCase="'text'">
+                    <span
+                      [class]="
+                        column.className
+                          ? column.className(item[column.field])
+                          : ''
+                      "
+                      [title]="item[column.field]"
+                    >
+                      {{ item[column.field] }}
+                    </span>
+                  </ng-container>
+                  <!-- Number -->
+                  <ng-container *ngSwitchCase="'number'">
+                    {{
+                      column.valueFormatter
+                        ? column.valueFormatter(item[column.field])
+                        : item[column.field]
+                    }}
+                  </ng-container>
+                  <!-- Date -->
+                  <ng-container *ngSwitchCase="'date'">
+                    {{
+                      column.valueFormatter
+                        ? column.valueFormatter(item[column.field])
+                        : item[column.field]
+                    }}
+                  </ng-container>
+                  <!-- Datetime -->
+                  <ng-container *ngSwitchCase="'datetime'">
+                    {{
+                      column.valueFormatter
+                        ? column.valueFormatter(item[column.field])
+                        : item[column.field]
+                    }}
+                  </ng-container>
+                  <!-- Email -->
+                  <ng-container *ngSwitchCase="'email'">
+                    {{ item[column.field] }}
+                  </ng-container>
+                  <!-- Link -->
+                  <ng-container *ngSwitchCase="'link'">
+                    <a class="link" (click)="column?.event(item)">
+                      <span class="white-space" [title]="item[column.field]">
+                        {{ item[column.field] }}
+                      </span>
+                    </a>
+                  </ng-container>
+                  <!-- Image -->
+                  <ng-container *ngSwitchCase="'image'">
+                    <img
+                      [src]="item[column.field]"
+                      [title]="item[column.field]"
+                      (click)="column?.event(item)"
+                      alt="image"
+                      class="image"
+                    />
+                  </ng-container>
+                  <!-- Boolean -->
+                  <ng-container *ngSwitchCase="'boolean'">
+                    <mat-icon *ngIf="!column.valueFormatter">{{
+                      item[column.field] ? "check" : "close"
+                    }}</mat-icon>
+                    <span *ngIf="column.valueFormatter">{{
+                      column.valueFormatter(item[column.field])
+                    }}</span>
+                  </ng-container>
+                  <!-- Default -->
+                  <ng-container *ngSwitchDefault>
+                    {{ item[column.field] }}
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="pageOptions.pageSizeOptions"
+        [pageSize]="pageOptions.pageSize"
+        [length]="source.totalRecords"
+        (page)="pageChange($event)"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+
+  <!-- ng template text -->
+  <ng-template #text let-column="column">
+    <mat-form-field (keyup.enter)="onFilter()" class="custom-form-field">
+      <mat-label>Filter {{ column.fieldName | translate }}</mat-label>
+      <mat-icon (click)="onFilter()" style="cursor: pointer" matSuffix
+        >search</mat-icon
+      >
+      <input
+        matInput
+        placeholder="Filter  {{ column.fieldName | translate }}"
+        [(ngModel)]="columnFilters[column.field]"
+      />
+    </mat-form-field>
+  </ng-template>
+  <!-- email -->
+  <ng-template #email let-column="column">
+    <mat-form-field (keyup.enter)="onFilter()" class="custom-form-field">
+      <mat-label>Filter {{ column.fieldName | translate }}</mat-label>
+      <mat-icon (click)="onFilter()" style="cursor: pointer" matSuffix
+        >search</mat-icon
+      >
+      <input
+        matInput
+        placeholder="Filter  {{ column.fieldName | translate }}"
+        [(ngModel)]="columnFilters[column.field]"
+      />
+    </mat-form-field>
+  </ng-template>
+
+  <!-- number -->
+  <ng-template #number let-column="column">
+    <app-number-range
+      (enter)="onNumberRangeEnter($event)"
+      (numberRangeSelected)="onNumberRangeSelected(column, $event)"
+    ></app-number-range>
+  </ng-template>
+  <!-- Date -->
+  <ng-template #date let-column="column">
+    <app-date-range-picker
+      (enter)="onDateRangeEnter($event)"
+      (dateRangeSelected)="onDateRangeSelected(column, $event)"
+    ></app-date-range-picker>
+  </ng-template>
+  <!-- datetime -->
+  <ng-template #datetime let-column="column">
+    <app-date-range-picker
+      (enter)="onDateRangeEnter($event)"
+      (dateRangeSelected)="onDateRangeSelected(column, $event)"
+    ></app-date-range-picker>
+  </ng-template>
+  <!-- Image -->
+  <ng-template #image let-column="column"> </ng-template>
+  <!-- Link -->
+  <ng-template #link let-column="column">
+    {{ column.fieldName | translate }}
+  </ng-template>
+
+  <!-- Boolean -->
+  <ng-template #boolean let-column="column">
+    <mat-form-field (keyup.enter)="onFilter()" class="custom-form-field">
+      <mat-label>Filter {{ column.fieldName | translate }}</mat-label>
+      <mat-icon (click)="onFilter()" style="cursor: pointer" matSuffix
+        >search</mat-icon
+      >
+      <!-- dropdown -->
+      <mat-select
+        [(ngModel)]="columnFilters[column.field]"
+        (selectionChange)="onFilter()"
+      >
+        <ng-container *ngIf="column.options?.length; else optionNull">
+          <mat-option
+            *ngFor="let option of column?.options"
+            [value]="option.value"
+            >{{ option.label }}</mat-option
+          >
+        </ng-container>
+        <ng-template #optionNull>
+          <mat-option [value]="null">All</mat-option>
+          <mat-option [value]="true">True</mat-option>
+          <mat-option [value]="false">False</mat-option>
+        </ng-template>
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+  <!-- Select -->
+  <ng-template #select let-column="column">
+    <mat-form-field (keyup.enter)="onFilter()" class="custom-form-field">
+      <mat-label>Filter {{ column.fieldName | translate }}</mat-label>
+      <mat-icon (click)="onFilter()" style="cursor: pointer" matSuffix
+        >search</mat-icon
+      >
+      <mat-select
+        [(ngModel)]="columnFilters[column.field]"
+        [multiple]="column.multiple"
+        (selectionChange)="onSelectFilter(column, $event.value)"
+        [(ngModel)]="column.value"
+        [disabled]="column.disabled"
+      >
+        <mat-option [value]="null">All</mat-option>
+        <mat-option
+          *ngFor="let option of column.options"
+          [value]="option.value"
+          >{{ option.label }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </ng-template>

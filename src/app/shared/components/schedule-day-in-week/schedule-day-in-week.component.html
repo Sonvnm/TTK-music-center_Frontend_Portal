@@ -1,0 +1,64 @@
+<mat-card>
+  <div *ngIf="this.weeks">
+    <mat-form-field appearance="outline">
+      <mat-label>Năm</mat-label>
+      <mat-select (selectionChange)="onYearChange($event)" [value]="years[1]">
+        <mat-option *ngFor="let item of years" [value]="item">
+          {{ item }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="ms-2">
+      <mat-label>Tuần</mat-label>
+      <mat-select
+        (selectionChange)="onWeekChange($event)"
+        [value]="this.thisWeek ? this.thisWeek[0] : weeks[0]"
+      >
+        <mat-option *ngFor="let item of weeks" [value]="item">
+          {{ item.startWeek.view + " tới " + item.lastWeek.view }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <th rowspan="2" scope="col">Tiết</th>
+          <th *ngFor="let day of daysInWeek">
+            {{ day.format("DD-MM") }}
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let day of daysInWeek">
+            {{ day.format("dddd") }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container
+          *ngFor="
+            let item of ['Sáng 7h-9h', 'Chiều 13h-15h', 'Tối 18h-20h'];
+            let index = index
+          "
+        >
+          <tr>
+            <th scope="row">{{ item }}</th>
+            <td *ngFor="let day of daysInWeek">
+              {{ getData(day, index).name }}
+              <button
+                mat-flat-button
+                class="badge"
+                [ngClass]="{
+                  'bg-primary': getData(day, index).status == 'New',
+                  'bg-success': getData(day, index).status === 'Done'
+                }"
+              >
+                {{ getData(day, index).status }}
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</mat-card>

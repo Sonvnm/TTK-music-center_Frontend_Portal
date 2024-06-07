@@ -1,0 +1,27 @@
+<a class="nav-link" ngbDropdownToggle id="languageDropdown" role="button">
+  <img
+    src="{{ langMain?.icon }}"
+    class="wd-20 me-1"
+    title="{{ langMain?.name }}"
+    alt="{{ langMain?.name }}"
+  />
+  <span class="fw-bold ms-1 me-1 d-none d-md-inline-block">{{
+    langMain?.name
+  }}</span>
+</a>
+<div ngbDropdownMenu aria-labelledby="languageDropdown" style="top: 30px">
+  <a
+    ngbDropdownItem
+    class="py-2"
+    *ngFor="let lang of langs"
+    (click)="changeLanguage(lang.code)"
+  >
+    <img
+      src="{{ lang.icon }}"
+      class="wd-20 me-1"
+      title="{{ lang.name }}"
+      alt="{{ lang.name }}"
+    />
+    <span class="ms-1"> {{ lang.name }} </span>
+  </a>
+</div>

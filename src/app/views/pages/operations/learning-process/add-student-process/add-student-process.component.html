@@ -1,0 +1,53 @@
+<app-hmz-buttons
+  [buttons]="buttons"
+  title="Điểm danh sinh viên"
+></app-hmz-buttons>
+<!-- <app-hmz-table
+  [columns]="columns"
+  [data]="data"
+  [title]="title"
+  [showSelect]="true"
+  [multiSelect]="false"
+  (onRequest)="onRequest($event)"
+  (onSelect)="onSelectChange($event)"
+>
+</app-hmz-table> -->
+
+<div class="container">
+  <h4 class="my-2">{{ this.title }}</h4>
+  <form id="attendance-form">
+    <div *ngFor="let item of items;let lastIndex=last">
+      <div style="width: 100%; display: flex; justify-content: space-between">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            width: 45%;
+            align-items: center;
+          "
+        >
+          <p>{{ item.username }}</p>
+          <div>
+            <input
+              class="ms-4"
+              type="checkbox"
+              [(ngModel)]="item.isAbsent"
+              [ngModelOptions]="{ standalone: true }"
+              name="absent"
+              id="{{ item.id }}"
+            />
+            <label class="ms-2" for="{{ item.id }}">Vắng mặt</label>
+          </div>
+        </div>
+        <input
+          class="w-50"
+          type="text"
+          placeholder="Mô tả"
+          [(ngModel)]="item.description"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+      <mat-divider *ngIf="!lastIndex" class="my-2"></mat-divider>
+    </div>
+  </form>
+</div>

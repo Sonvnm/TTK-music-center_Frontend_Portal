@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="mt-4">
+    <app-hmz-buttons [title]="title" [buttons]="buttons"></app-hmz-buttons>
+  </div>
+  <app-hmz-table
+    [columns]="columns"
+    [data]="dataPermission"
+    [title]="'Danh sách học viên'"
+    [showSelect]="true"
+    [multiSelect]="!isTeacher"
+    (onRequest)="onRequest($event)"
+    (onSelect)="onSelectChange($event)"
+  >
+  </app-hmz-table>
+</div>

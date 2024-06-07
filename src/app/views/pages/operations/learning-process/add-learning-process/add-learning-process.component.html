@@ -1,0 +1,16 @@
+<div class="container-fluid pb-0">
+  <div class="mt-4">
+    <app-hmz-buttons [title]="title" [buttons]="buttons"></app-hmz-buttons>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <app-mat-dynamic-form
+        [formFields]="formFields"
+        [data]="item"
+        (submit)="onFormSubmit($event)"
+        (change)="onFormChange($event)"
+      >
+      </app-mat-dynamic-form>
+    </div>
+  </div>
+</div>

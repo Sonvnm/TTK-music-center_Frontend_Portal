@@ -1,0 +1,12 @@
+<app-hmz-buttons [buttons]="buttons"></app-hmz-buttons>
+  <app-hmz-table
+    [columns]="columns"
+    [data]="data"
+    [title]="'Danh sách lịch sử hệ thống'"
+    [showSelect]="true"
+    [multiSelect]="true"
+    (onRequest)="onRequest($event)"
+    (onSelect)="onSelectChange($event)"
+
+  >
+  </app-hmz-table>

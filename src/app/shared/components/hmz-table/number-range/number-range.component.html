@@ -1,0 +1,31 @@
+<div class="number-range-container">
+  <mat-form-field (keyup.enter)="onEnter()" class="custom-form-field">
+    <mat-label>Từ số</mat-label>
+    <input
+      matInput
+      type="number"
+      placeholder="Từ số"
+      [(ngModel)]="fromNumber"
+      (ngModelChange)="emitNumberRange()"
+    />
+    <button mat-button matSuffix *ngIf="fromNumber" (click)="clearFromNumber()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+  <label class="label">
+    <mat-icon>arrow_forward</mat-icon>
+  </label>
+  <mat-form-field (keyup.enter)="onEnter()" class="custom-form-field">
+    <mat-label>Đến số</mat-label>
+    <input
+      matInput
+      type="number"
+      placeholder="Đến số"
+      [(ngModel)]="toNumber"
+      (ngModelChange)="emitNumberRange()"
+    />
+    <button mat-button matSuffix *ngIf="toNumber" (click)="clearToNumber()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+</div>

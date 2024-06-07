@@ -1,0 +1,25 @@
+<div class="container-fluid pb-0">
+  <div class="mt-4">
+    <app-hmz-buttons [title]="title" [buttons]="buttons"></app-hmz-buttons>
+  </div>
+  <div class="row">
+    <app-hmz-table
+      [columns]="columns"
+      [data]="data"
+      [title]="
+        'Chi tiết lịch dạy của ' +
+        dialogData?.name +
+        ' (' +
+        (dialogData?.startDate | date : 'dd/MM/yyyy') +
+        ' - ' +
+        (dialogData?.endDate | date : 'dd/MM/yyyy') +
+        ')'
+      "
+      [showSelect]="true"
+      [multiSelect]="true"
+      (onRequest)="onRequest($event)"
+      (onSelect)="onSelectChange($event)"
+    >
+    </app-hmz-table>
+  </div>
+</div>

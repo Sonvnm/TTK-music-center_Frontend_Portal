@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="card" >
+    <div class="card-body">
+      <app-mat-dynamic-form [formFields]="formFields" [data]="role" (submit)="onFormSubmit($event)" (change)="onFormChange($event)">
+      </app-mat-dynamic-form>
+      <app-hmz-buttons [buttons]="buttons"></app-hmz-buttons>
+      <app-hmz-table
+        [columns]="columns"
+        [data]="data"
+        [title]="'List permission'"
+        [showSelect]="true"
+        [multiSelect]="true"
+        (onRequest)="onRequest($event)"
+        (onSelect)="onSelectChange($event)"
+      >
+      </app-hmz-table>
+    </div>
+  </div>
+</div>
